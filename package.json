@@ -1,0 +1,50 @@
+{
+  "name": "figma-plugin-boilerplate",
+  "version": "1.0.0",
+  "description": "Figma Plugin Boilerplate",
+  "main": "gulpfile.js",
+  "scripts": {
+    "build": "gulp --production",
+    "dev": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mykhailo-petrenko/figma-plugin-boilerplate.git"
+  },
+  "keywords": [
+    "gulp",
+    "boilerplate",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "@mykhailo-petrenko",
+  "license": "MIT",
+  "homepage": "https://github.com/mykhailo-petrenko/figma-plugin-boilerplate#readme",
+  "devDependencies": {
+    "@figma/plugin-typings": "~1.81.0",
+    "autoprefixer": "^9.7.6",
+    "chokidar": "^3.5.3",
+    "del": "^5.1.0",
+    "figma-plugin-ds": "~1.0.1",
+    "fsevents": "^2.3.3",
+    "gulp": "~4.0.2",
+    "gulp-base64-inline": "~1.0.6",
+    "gulp-concat": "~2.6.1",
+    "gulp-csso": "~4.0.1",
+    "gulp-htmlmin": "~5.0.1",
+    "gulp-inline-source": "~4.0.0",
+    "gulp-minify": "~3.1.0",
+    "gulp-noop": "^1.0.1",
+    "gulp-postcss": "~9.0.1",
+    "gulp-purgecss": "~5.0.0",
+    "gulp-replace": "~1.1.4",
+    "gulp-sass": "~5.1.0",
+    "gulp-typescript": "~6.0.0-alpha.1",
+    "sass": "^1.69.5",
+    "typescript": "~5.2.2"
+  },
+  "resolutions": {
+    "fsevents": "2.3.3"
+  }
+}
