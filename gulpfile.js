@@ -10,13 +10,13 @@ const autoprefixer = require('autoprefixer'); //handles autoprefixing for browse
 const csso = require('gulp-csso'); //css minification
 const ts = require('gulp-typescript'); //typescript compiler
 const replace = require('gulp-replace'); //replace a string in a file being processed
-const base64 = require('gulp-base64-inline'); //inline any css background images with base64 
+const base64 = require('gulp-base64-inline'); //inline any css background images with base64
 const inlinesource = require('gulp-inline-source'); //inline js and css and images
 const htmlmin = require('gulp-htmlmin'); //minify html
 
 //for signalling dev vs. prod build
 const noop = require('gulp-noop'); //enables a dev and production build with minification
-var production = !!process.env.production; //this keeps track of whether or not we are doing a normal or priduction build
+const production = !!process.env.production; //this keeps track of whether or not we are doing a normal or priduction build
 
 //clean up post build
 const purgecss = require('gulp-purgecss'); //remove unused css
@@ -26,7 +26,7 @@ const del = require('del'); //plugin to delete temp files after build
 const tsProject = ts.createProject('tsconfig.json', { noImplicitAny: true, outFile: 'code.js' });
 
 // File paths
-const files = { 
+const files = {
     scssPath: 'src/ui/styles/**/*.scss', //path to your CSS/SCSS folder
     jsPath: 'src/ui/scripts/**/*.js', //path to any javascript that you use in your UI
     tsPath: 'src/main/**/*.ts', //location of typescript files for the main plugin code that interfaces with the Figma API
@@ -36,7 +36,7 @@ const files = {
 }
 
 // SCSS task: compiles the styles.scss file into styles.css
-function scssTask(){    
+function scssTask(){
     return src(files.scssPath)
         .pipe(sass()) //compile to css
         .pipe(replace('background-image: url(', 'background-image: inline('))
@@ -44,7 +44,7 @@ function scssTask(){
         .pipe(postcss([ autoprefixer()])) // PostCSS plugins
         .pipe(production ? csso() : noop()) //minify css on production build
         .pipe(dest('src/ui/tmp') //put in temporary directory
-    ); 
+    );
 }
 
 //CSS Task: Process Figma Plugin DS CSS
@@ -80,12 +80,12 @@ function tsTask() {
         .pipe(dest('dist'));
 }
 
-//HTML task: copies and minifies 
+//HTML task: copies and minifies
 function htmlTask() {
     return src([files.html])
         .pipe(inlinesource({
             attribute: false,
-            compress: production ? true : false,
+            compress: !!production,
             pretty: true
         }))
        .pipe(production ? htmlmin({ collapseWhitespace: true }) : noop())
@@ -105,10 +105,10 @@ function manifestTask() {
 }
 
 
-// Watch all key files for changes, if there is a change saved, create a build 
+// Watch all key files for changes, if there is a change saved, create a build
 function watchTask(){
     watch([files.scssPath, files.jsPath, files.tsPath, files.html, files.manifest],
-        {interval: 1000, usePolling: true}, 
+        {interval: 1000, usePolling: true},
         series(
             parallel(jsTask, tsTask),
             scssTask,
@@ -117,7 +117,7 @@ function watchTask(){
             manifestTask,
             cleanUp
         )
-    );    
+    );
 }
 
 // Export the default Gulp task so it can be run

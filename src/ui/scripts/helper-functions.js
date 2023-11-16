@@ -1,3 +1,3 @@
 function helper() {
-    console.log('testing');
+  console.log('testing');
 }
